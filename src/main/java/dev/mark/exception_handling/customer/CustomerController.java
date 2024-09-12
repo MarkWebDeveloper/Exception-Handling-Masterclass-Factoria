@@ -2,6 +2,7 @@ package dev.mark.exception_handling.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,15 +18,29 @@ import dev.mark.exception_handling.error_handling.ErrorResponse;
 public class CustomerController {
 
     @Autowired
-    private CustomerService customerService;
+    private ICustomerService customerService;
 
     @GetMapping("/getCustomer/{id}")
     public Customer getCustomer(@PathVariable("id") Long id) {
         return customerService.getCustomer(id);
     }
 
+    @GetMapping("/getCustomerChecked/{id}")
+    public Customer getCustomerChecked(@PathVariable("id") Long id) throws NoSuchCustomerExistsCheckedException {
+        return customerService.getCustomerChecked(id);
+    }
+
+    @GetMapping("/getCustomerChecked2/{id}")
+    public ResponseEntity<Customer> getCustomerReturnOtherCustomer(@PathVariable("id") Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomerChecked(id));
+        } catch (NoSuchCustomerExistsCheckedException e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(customerService.getCustomer(1L));
+        }
+    }
+
     @PostMapping("/addCustomer")
-    public String addcustomer(@RequestBody Customer customer) {
+    public String addcustomer(@RequestBody Customer customer){
         return customerService.addCustomer(customer);
     }
 
