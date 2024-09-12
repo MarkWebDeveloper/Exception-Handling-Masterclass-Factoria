@@ -1,4 +1,4 @@
-package dev.mark.exception_handling.customer;
+package dev.mark.exception_handling.student;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "customers")
-public class Customer {
+@Table(name = "students")
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

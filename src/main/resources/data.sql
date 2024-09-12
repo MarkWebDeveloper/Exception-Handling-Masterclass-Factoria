@@ -1,2 +1,2 @@
--- Customers
-INSERT INTO customers(id, name, address) VALUES(DEFAULT, 'Giaco', 'Paris');
+-- Students
+INSERT INTO students(id, name, address) VALUES(DEFAULT, 'Giaco', 'Paris');
